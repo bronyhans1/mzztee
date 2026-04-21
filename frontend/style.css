@@ -380,6 +380,7 @@ header.scrolled {
     height: 100%;
     object-fit: cover;
     object-position: center;
+    filter: brightness(1.05) contrast(1.05);
 }
 
 @keyframes heroSlide {
@@ -411,21 +412,24 @@ header.scrolled {
     }
 
     .hero-tagline {
-        background: rgba(0, 0, 0, 0.45);
-        padding: 6px 12px;
-        border-radius: 4px;
+        background: transparent;
         display: inline-block;
-        color: var(--color-accent);
-        text-shadow: 0 2px 6px rgba(0, 0, 0, 0.6);
+        padding: 8px 16px;
+        border: 1px solid rgba(255, 215, 0, 0.25);
+        border-radius: 2px;
+        letter-spacing: 2px;
+        font-size: 12px;
+        color: #FFD54F;
+        text-shadow:
+            0 0 4px rgba(255, 213, 79, 0.25),
+            0 1px 2px rgba(0, 0, 0, 0.25);
     }
 
     .hero-content {
         padding-top: 20px;
     }
 
-    .hero::before {
-        background: rgba(0, 0, 0, 0.5);
-    }
+    .hero::before { background: rgba(0, 0, 0, 0.25); }
 }
 
 .hero-content {
