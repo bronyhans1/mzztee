@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | MZZTEE KLOTHING</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body.admin-page {
+            overflow-x: visible;
+            overflow-y: visible;
+        }
+
+        .admin-page {
+            --bg-dark: #0f172a;
+            --bg-card: #1e293b;
+            --bg-light: #111827;
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --text-main: #f9fafb;
+            --text-muted: #9ca3af;
+            --border-color: #374151;
+
+            min-height: 100vh;
+            margin: 0;
+            background: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Inter', system-ui, sans-serif;
+            overflow-x: visible;
+            overflow-y: visible;
+        }
+
+        .admin-page .container,
+        .admin-page .admin-main {
+            overflow-x: visible;
+            overflow-y: visible;
+        }
+
+        .admin-page .container {
+            padding-left: 24px;
+            padding-right: 24px;
+        }
+
+        .admin-page .admin-top.admin-header {
+            position: relative;
+            top: auto;
+            left: auto;
+            right: auto;
+            z-index: 10;
+            width: 100%;
+            margin: 0 0 1.5rem;
+            padding: 0;
+            background: var(--bg-card);
+            border-bottom: 1px solid var(--border-color);
+            backdrop-filter: none;
+        }
+
+        .admin-page .admin-top-inner {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            padding-top: 16px;
+            padding-bottom: 16px;
+            box-sizing: border-box;
+        }
+
+        .admin-page .admin-top h1 {
+            color: var(--text-main);
+            font-size: clamp(1.05rem, 2.5vw, 1.35rem);
+            font-weight: 600;
+            margin: 0;
+            letter-spacing: 0.04em;
+        }
+
+        .admin-page .admin-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .admin-page .admin-actions .btn {
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-light);
+            color: var(--text-main);
+            padding: 8px 14px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            font-family: inherit;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            transition: background 0.2s, border-color 0.2s;
+        }
+
+        .admin-page .admin-actions .btn:hover {
+            background: #1f2937;
+            border-color: #4b5563;
+            color: var(--text-main);
+        }
+
+        .admin-page .admin-actions .btn-primary {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #fff;
+        }
+
+        .admin-page .admin-actions .btn-primary:hover {
+            background: var(--primary-hover);
+            border-color: var(--primary-hover);
+            color: #fff;
+        }
+
+        .admin-page #logoutBtn {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+        }
+
+        .admin-page #logoutBtn:hover {
+            background: var(--bg-light);
+            border-color: #4b5563;
+        }
+
+        .admin-page .admin-section-title {
+            font-family: 'Inter', system-ui, sans-serif;
+            font-size: clamp(1.2rem, 2.5vw, 1.45rem);
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--text-main);
+            letter-spacing: -0.02em;
+        }
+
+        .admin-page .admin-status {
+            min-height: 1.5rem;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        .admin-page .admin-status--error {
+            color: #fca5a5;
+        }
+
+        .admin-page .admin-table-wrap {
+            width: 100%;
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid var(--border-color);
+            box-sizing: border-box;
+            overflow-x: visible;
+            overflow-y: visible;
+        }
+
+        .admin-page .table-wrapper {
+            overflow-x: auto;
+            overflow-y: visible;
+        }
+
+        .admin-page .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.875rem;
+        }
+
+        .admin-page .admin-table th,
+        .admin-page .admin-table td {
+            padding: 10px 12px;
+            text-align: left;
+            vertical-align: middle;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .admin-page .admin-table th {
+            white-space: nowrap;
+            font-weight: 600;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--text-muted);
+            background: var(--bg-light);
+        }
+
+        .admin-page .admin-table td {
+            white-space: normal;
+            color: var(--text-main);
+            line-height: 1.4;
+        }
+
+        @media (min-width: 601px) {
+            .admin-page .admin-table td {
+                vertical-align: middle;
+            }
+
+            .admin-page .admin-table td:nth-child(1),
+            .admin-page .admin-table td:nth-child(2),
+            .admin-page .admin-table td:nth-child(3),
+            .admin-page .admin-table td:nth-child(4),
+            .admin-page .admin-table td:nth-child(6),
+            .admin-page .admin-table td:nth-child(7),
+            .admin-page .admin-table td:nth-child(8) {
+                white-space: nowrap;
+            }
+
+            .admin-page .admin-table td:nth-child(1) .admin-td-value,
+            .admin-page .admin-table td:nth-child(2) .admin-td-value,
+            .admin-page .admin-table td:nth-child(3) .admin-td-value,
+            .admin-page .admin-table td:nth-child(6) .admin-td-value {
+                white-space: nowrap;
+            }
+
+            .admin-page .admin-table td:nth-child(4) .admin-td-value {
+                white-space: nowrap;
+            }
+
+            .admin-page .admin-table td:nth-child(7) .admin-td-value {
+                white-space: nowrap;
+            }
+
+            .admin-page .admin-table td:nth-child(5) {
+                white-space: normal;
+                word-break: normal;
+                overflow-wrap: break-word;
+                max-width: 250px;
+            }
+
+            .admin-page .admin-table td:nth-child(5) .admin-td-value {
+                display: block;
+                white-space: normal;
+                word-break: normal;
+                overflow-wrap: break-word;
+            }
+
+            .admin-page .admin-table tbody tr {
+                transition: background 0.2s ease, transform 0.15s ease;
+                transform: scale(1);
+            }
+
+            .admin-page .admin-table tbody tr:hover {
+                background: rgba(255, 255, 255, 0.04);
+                transform: scale(1.002);
+            }
+
+            .admin-page .admin-table tbody tr:hover td {
+                background: transparent;
+            }
+        }
+
+        .admin-page .admin-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .admin-page .admin-table tbody tr {
+            overflow: visible;
+        }
+
+        .admin-page .admin-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: capitalize;
+            letter-spacing: 0.02em;
+        }
+
+        .admin-page .status-badge {
+            white-space: nowrap;
+            font-weight: 500;
+            letter-spacing: 0.3px;
+        }
+
+        .admin-page .admin-badge--pending {
+            background: rgba(245, 158, 11, 0.2);
+            color: #fbbf24;
+        }
+
+        .admin-page .admin-badge--approved {
+            background: rgba(16, 185, 129, 0.2);
+            color: #34d399;
+        }
+
+        .admin-page .admin-badge--completed {
+            background: rgba(107, 114, 128, 0.25);
+            color: #9ca3af;
+        }
+
+        .admin-page .admin-actions-cell {
+            vertical-align: middle;
+        }
+
+        .admin-page .actions-container {
+            display: flex;
+            gap: 8px;
+            flex-wrap: nowrap;
+            align-items: center;
+        }
+
+        .admin-page .admin-btn {
+            font-family: inherit;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 6px 10px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease,
+                box-shadow 0.2s ease, opacity 0.2s ease;
+        }
+
+        .admin-page .admin-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .admin-page .admin-btn:active {
+            transform: translateY(0);
+            box-shadow: none;
+        }
+
+        .admin-page .admin-btn--approve {
+            background: #10b981;
+            color: #fff;
+        }
+
+        .admin-page .admin-btn--complete {
+            background: #3b82f6;
+            color: #fff;
+        }
+
+        .admin-page .admin-btn--delete {
+            background: #ef4444;
+            color: #fff;
+        }
+
+        .admin-page .actions-container .admin-btn {
+            padding: 6px 10px;
+            font-size: 12px;
+        }
+
+        .admin-page .admin-main {
+            padding-bottom: 4rem;
+        }
+
+        /* Admin toasts (reuse global .toast motion from style.css) */
+        body.admin-page .toast.admin-delete-confirm,
+        body.admin-page .toast.admin-toast {
+            z-index: 5000;
+            flex-direction: column;
+            align-items: stretch;
+            gap: 0;
+            max-width: 360px;
+            padding: 16px 18px;
+            text-align: left;
+        }
+
+        body.admin-page .toast.admin-delete-confirm .toast-message {
+            font-size: 0.95rem;
+            line-height: 1.45;
+            color: #fff;
+        }
+
+        body.admin-page .toast.toast-warning {
+            background: #1f2937;
+            color: #fff;
+            border-left: 4px solid #f59e0b;
+        }
+
+        body.admin-page .toast-actions {
+            margin-top: 10px;
+            display: flex;
+            gap: 8px;
+        }
+
+        body.admin-page .toast-btn {
+            padding: 6px 10px;
+            font-size: 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            border: none;
+            font-family: inherit;
+        }
+
+        body.admin-page .toast-btn.cancel-btn {
+            background: #374151;
+            color: #fff;
+        }
+
+        body.admin-page .toast-btn.delete-btn {
+            background: #ef4444;
+            color: #fff;
+        }
+
+        body.admin-page .toast.admin-toast--success {
+            background: #1f2937;
+            color: #fff;
+            border-left: 4px solid #10b981;
+        }
+
+        body.admin-page .toast.admin-toast--error {
+            background: #1f2937;
+            color: #fff;
+            border-left: 4px solid #ef4444;
+        }
+
+        @media (min-width: 1024px) {
+            .admin-page .container {
+                max-width: 1500px;
+                padding-left: 16px;
+                padding-right: 16px;
+            }
+
+            .admin-page .admin-table {
+                width: 100%;
+                table-layout: auto;
+            }
+
+            .admin-page .admin-table td:nth-child(5),
+            .admin-page .admin-table td:nth-child(7) {
+                white-space: nowrap;
+            }
+
+            .admin-page .admin-table th:nth-child(3),
+            .admin-page .admin-table td:nth-child(3) {
+                min-width: 140px;
+            }
+
+            .admin-page .admin-table td:nth-child(6) {
+                max-width: 220px;
+                white-space: normal;
+            }
+
+            .admin-page .admin-table td:nth-child(6) .admin-td-value {
+                white-space: normal;
+            }
+        }
+
+        @media (max-width: 768px) {
+            body.admin-page {
+                padding: 0;
+                margin: 0;
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .admin-page .admin-top.admin-header {
+                width: 100%;
+                max-width: 100%;
+                box-sizing: border-box;
+            }
+
+            .admin-page .container {
+                max-width: 100%;
+                width: 100%;
+                margin: 0;
+                padding-left: 12px;
+                padding-right: 12px;
+                box-sizing: border-box;
+            }
+
+            .admin-page .admin-table-wrap {
+                width: 100%;
+                max-width: 100%;
+                box-sizing: border-box;
+            }
+
+            .admin-page .admin-top.admin-header .admin-top-inner {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .admin-page .admin-actions {
+                display: flex;
+                width: 100%;
+                margin-top: 6px;
+                gap: 8px;
+                flex-wrap: wrap;
+                justify-content: flex-start;
+                align-items: stretch;
+            }
+
+            .admin-page .admin-actions .btn {
+                flex: 1 1 auto;
+                min-width: 0;
+                justify-content: center;
+                text-align: center;
+            }
+
+            .admin-page .table-wrapper {
+                width: 100%;
+                max-width: 100%;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .admin-page .admin-table {
+                font-size: 12px;
+            }
+
+            .admin-page .admin-table th,
+            .admin-page .admin-table td {
+                padding: 6px;
+            }
+
+            .admin-page .admin-table td {
+                word-break: normal;
+                overflow-wrap: break-word;
+            }
+
+            .admin-page .admin-table-wrap {
+                padding: 12px;
+                margin: 12px 0;
+            }
+
+            .admin-page .actions-container {
+                flex-wrap: wrap;
+                gap: 6px;
+            }
+
+            .admin-page .actions-container .admin-btn {
+                flex: 1 1 auto;
+                min-width: 0;
+                font-size: 11px;
+                padding: 5px 8px;
+                min-height: 36px;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .admin-page .admin-actions .btn {
+                flex: 1;
+                min-width: 0;
+            }
+
+            .admin-page .admin-table {
+                display: block;
+                width: 100%;
+                border-collapse: separate;
+                border-spacing: 0;
+            }
+
+            .admin-page .admin-table thead {
+                display: none;
+            }
+
+            .admin-page .admin-table tbody {
+                display: block;
+                width: 100%;
+            }
+
+            .admin-page .admin-table-wrap,
+            .admin-page .table-wrapper {
+                overflow-x: visible;
+                overflow-y: visible;
+            }
+
+            .admin-page .admin-table tbody tr {
+                display: block;
+                width: 100%;
+                max-width: 100%;
+                box-sizing: border-box;
+                background: var(--bg-light);
+                margin-bottom: 12px;
+                border-radius: 10px;
+                padding: 10px 12px;
+                border: 1px solid var(--border-color);
+                overflow: visible;
+            }
+
+            /* Uncomment next line to debug card clipping: outline: 2px solid red; on each row */
+            /* .admin-page .admin-table tbody tr { outline: 2px solid red; } */
+
+            .admin-page .admin-table tbody tr:hover td {
+                background: transparent;
+            }
+
+            .admin-page .admin-table tbody td,
+            .admin-page .admin-table tbody td:first-child,
+            .admin-page .admin-table tbody td:first-of-type {
+                display: flex !important;
+                flex-direction: column;
+                align-items: flex-start;
+                justify-content: flex-start;
+                gap: 2px;
+                min-height: 20px;
+                min-width: 0;
+                width: 100%;
+                max-width: 100%;
+                padding: 8px 0;
+                border-bottom: 1px solid var(--border-color);
+                word-break: normal;
+                overflow-wrap: break-word;
+                overflow: visible;
+                visibility: visible;
+                box-sizing: border-box;
+            }
+
+            .admin-page .admin-table tbody td::before {
+                content: attr(data-label);
+                display: block;
+                width: 100%;
+                flex-shrink: 0;
+                font-size: 11px;
+                font-weight: 600;
+                color: var(--text-muted);
+                text-transform: uppercase;
+                letter-spacing: 0.04em;
+                margin-bottom: 2px;
+                line-height: 1.3;
+            }
+
+            /*
+             * DEBUG: uncomment to verify labels / cell bounds (remove after fixing)
+             * .admin-page .admin-table tbody td { border: 1px solid red !important; }
+             * .admin-page .admin-table tbody td::before { color: yellow !important; }
+             */
+
+            .admin-page .admin-table tbody td .admin-td-value {
+                width: 100%;
+                text-align: left;
+                word-break: normal;
+                overflow-wrap: break-word;
+            }
+
+            .admin-page .admin-table tbody td .admin-td-value--actions.actions-container {
+                display: flex;
+                justify-content: flex-start;
+                gap: 6px;
+                flex-wrap: wrap;
+                width: 100%;
+            }
+
+            .admin-page .admin-actions-cell .admin-btn {
+                flex: 0 0 auto;
+                min-width: 72px;
+            }
+
+            .admin-page .admin-table tbody tr:last-child td {
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            .admin-page .admin-table tbody td:last-child {
+                border-bottom: none;
+                padding-bottom: 2px;
+            }
+        }
+    </style>
+</head>
+<body class="admin-page">
+    <header class="admin-top admin-header">
+        <div class="container admin-top-inner">
+            <h1>MZZTEE KLOTHING — Admin Dashboard</h1>
+            <div class="admin-actions">
+                <button type="button" id="refreshBtn" class="btn btn-primary">Refresh</button>
+                <button type="button" id="logoutBtn" class="btn">Log out</button>
+                <a href="index.html" class="btn">Back to site</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container admin-main">
+        <h2 class="admin-section-title">Booking Requests</h2>
+        <p id="statusMessage" class="admin-status" role="status" aria-live="polite"></p>
+
+        <div class="admin-table-wrap">
+            <div class="table-wrapper">
+                <table class="admin-table" id="bookingsTable">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Service</th>
+                            <th>Date</th>
+                            <th>Message</th>
+                            <th>Created At</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="bookingsBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <script src="admin.js" defer></script>
+</body>
+</html>

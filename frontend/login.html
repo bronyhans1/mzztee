@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login | MZZTEE KLOTHING</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .login-page {
+            --bg-dark: #0f172a;
+            --bg-card: #1e293b;
+            --bg-light: #111827;
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --text-main: #f9fafb;
+            --text-muted: #9ca3af;
+            --border-color: #374151;
+
+            min-height: 100vh;
+            margin: 0;
+            background: var(--bg-dark);
+            color: var(--text-main);
+            font-family: 'Inter', system-ui, sans-serif;
+        }
+
+        .login-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 24px 16px;
+            box-sizing: border-box;
+        }
+
+        .login-card {
+            background: var(--bg-card);
+            padding: 30px;
+            border-radius: 16px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+            border: 1px solid var(--border-color);
+        }
+
+        .brand-header {
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .brand-title {
+            font-size: 26px;
+            font-weight: 700;
+            text-align: center;
+            color: var(--text-main);
+            margin: 0 0 0.35rem;
+            letter-spacing: 0.06em;
+        }
+
+        .brand-subtitle {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 14px;
+            margin: 0 0 20px;
+        }
+
+        .login-card .form-group {
+            margin-bottom: 1.1rem;
+        }
+
+        .login-card .form-label {
+            display: block;
+            margin-bottom: 0.4rem;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        .login-card input.form-control {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-light);
+            color: var(--text-main);
+            font-family: inherit;
+            font-size: 0.95rem;
+            box-sizing: border-box;
+        }
+
+        .login-card input.form-control::placeholder {
+            color: #6b7280;
+        }
+
+        .login-card input.form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.25);
+        }
+
+        .password-wrapper {
+            position: relative;
+        }
+
+        .password-wrapper .form-control {
+            padding-right: 44px;
+        }
+
+        .toggle-eye {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            user-select: none;
+            font-size: 1rem;
+            line-height: 1;
+            padding: 6px;
+            border-radius: 6px;
+            color: var(--text-muted);
+        }
+
+        .toggle-eye:hover {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-main);
+        }
+
+        .toggle-eye:focus {
+            outline: 2px solid var(--primary);
+            outline-offset: 1px;
+        }
+
+        #loginError {
+            color: #fca5a5;
+            font-size: 0.85rem;
+            min-height: 1.25rem;
+            margin-bottom: 0.75rem;
+        }
+
+        #loginBtn {
+            width: 100%;
+            padding: 10px 12px;
+            margin-top: 0.35rem;
+            border-radius: 8px;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: background 0.2s, transform 0.1s;
+        }
+
+        #loginBtn:hover:not(:disabled) {
+            background: var(--primary-hover);
+        }
+
+        #loginBtn:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+        }
+
+        #loginBtn:active:not(:disabled) {
+            transform: scale(0.99);
+        }
+
+        .login-back {
+            display: block;
+            text-align: center;
+            margin-top: 1.35rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            transition: color 0.2s;
+        }
+
+        .login-back:hover {
+            color: var(--primary);
+        }
+    </style>
+</head>
+<body class="login-page">
+    <div class="login-container">
+        <div class="login-card">
+            <div class="brand-header">
+                <h1 class="brand-title">MZZTEE KLOTHING</h1>
+                <p class="brand-subtitle">Admin Portal</p>
+            </div>
+            <p id="loginError" role="alert" aria-live="polite"></p>
+            <form id="loginForm" novalidate>
+                <div class="form-group">
+                    <label class="form-label" for="username">Username</label>
+                    <input type="text" id="username" name="username" class="form-control" placeholder="Username" required autocomplete="username">
+                </div>
+                <div class="form-group">
+                    <label class="form-label" for="password">Password</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="password" name="password" class="form-control" placeholder="Password" required autocomplete="current-password">
+                        <span id="togglePassword" class="toggle-eye" role="button" tabindex="0" aria-label="Show password" title="Show or hide password">👁</span>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block" id="loginBtn">Login</button>
+            </form>
+            <a href="index.html" class="login-back">← Back to website</a>
+        </div>
+    </div>
+    <script src="login.js" defer></script>
+</body>
+</html>
