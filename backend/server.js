@@ -8,7 +8,12 @@ const authRoutes = require("./routes/authRoutes");
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(cors({origin: "https://mzztee.vercel.app"}));
+app.use(cors({
+  origin: [
+    "https://mzzteeklothing.com",
+    "https://www.mzzteeklothing.com"
+  ]
+  }));
 app.use(express.json());
 
 app.get("/", (req, res) => {
