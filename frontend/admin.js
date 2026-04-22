@@ -43,7 +43,7 @@
     }
 
     function handleUnauthorized(status) {
-        if (status === 401) {
+        if (status === 401 || status === 403) {
             redirectToLogin();
             return true;
         }
