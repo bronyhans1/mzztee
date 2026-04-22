@@ -15,6 +15,12 @@
             overflow-y: visible;
         }
 
+        .admin-loader {
+            padding: 32px 24px;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
         .admin-page {
             --bg-dark: #0f172a;
             --bg-card: #1e293b;
@@ -659,42 +665,46 @@
     </style>
 </head>
 <body class="admin-page">
-    <header class="admin-top admin-header">
-        <div class="container admin-top-inner">
-            <h1>MZZTEE KLOTHING — Admin Dashboard</h1>
-            <div class="admin-actions">
-                <button type="button" id="refreshBtn" class="btn btn-primary">Refresh</button>
-                <button type="button" id="logoutBtn" class="btn">Log out</button>
-                <a href="index.html" class="btn">Back to site</a>
-            </div>
-        </div>
-    </header>
+    <div id="adminLoader" class="admin-loader" aria-live="polite">Loading...</div>
 
-    <main class="container admin-main">
-        <h2 class="admin-section-title">Booking Requests</h2>
-        <p id="statusMessage" class="admin-status" role="status" aria-live="polite"></p>
-
-        <div class="admin-table-wrap">
-            <div class="table-wrapper">
-                <table class="admin-table" id="bookingsTable">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Phone</th>
-                            <th>Service</th>
-                            <th>Date</th>
-                            <th>Message</th>
-                            <th>Created At</th>
-                            <th>Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="bookingsBody"></tbody>
-                </table>
+    <div id="adminApp" style="display: none;">
+        <header class="admin-top admin-header">
+            <div class="container admin-top-inner">
+                <h1>MZZTEE KLOTHING — Admin Dashboard</h1>
+                <div class="admin-actions">
+                    <button type="button" id="refreshBtn" class="btn btn-primary">Refresh</button>
+                    <button type="button" id="logoutBtn" class="btn">Log out</button>
+                    <a href="index.html" class="btn">Back to site</a>
+                </div>
             </div>
-        </div>
-    </main>
+        </header>
+
+        <main class="container admin-main">
+            <h2 class="admin-section-title">Booking Requests</h2>
+            <p id="statusMessage" class="admin-status" role="status" aria-live="polite"></p>
+
+            <div class="admin-table-wrap">
+                <div class="table-wrapper">
+                    <table class="admin-table" id="bookingsTable">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Service</th>
+                                <th>Date</th>
+                                <th>Message</th>
+                                <th>Created At</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="bookingsBody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
 
     <script src="admin.js" defer></script>
 </body>

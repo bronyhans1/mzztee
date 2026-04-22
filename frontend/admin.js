@@ -1,4 +1,16 @@
 (function () {
+    const token = localStorage.getItem("token");
+    const appRoot = document.getElementById("adminApp");
+    const loader = document.getElementById("adminLoader");
+
+    if (!token) {
+        window.location.replace("login.html");
+        return;
+    }
+
+    if (loader) loader.style.display = "none";
+    if (appRoot) appRoot.style.display = "block";
+
     const API_ROOT = 'https://mzztee-backend.onrender.com/api/bookings';
 
     let tbody;
