@@ -1,6 +1,6 @@
 const express = require("express");
 const Booking = require("../models/Booking");
-const auth = require("../middleware/auth");
+const authMiddleware = require("../middleware/authMiddleware");
 
 const router = express.Router();
 
@@ -55,7 +55,7 @@ router.post("/", async (req, res) => {
   }
 });
 
-router.get("/", auth, async (req, res) => {
+router.get("/", authMiddleware, async (req, res) => {
   try {
     const bookings = await Booking.find().sort({ createdAt: -1 });
     return res.json({
@@ -72,7 +72,7 @@ router.get("/", auth, async (req, res) => {
   }
 });
 
-router.patch("/:id", auth, async (req, res) => {
+router.patch("/:id", authMiddleware, async (req, res) => {
   try {
     const { status } = req.body;
     if (!allowedStatuses.includes(status)) {
@@ -99,7 +99,7 @@ router.patch("/:id", auth, async (req, res) => {
   }
 });
 
-router.delete("/:id", auth, async (req, res) => {
+router.delete("/:id", authMiddleware, async (req, res) => {
   try {
     const booking = await Booking.findByIdAndDelete(req.params.id);
     if (!booking) {
