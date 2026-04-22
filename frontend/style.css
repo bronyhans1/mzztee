@@ -366,6 +366,8 @@ header.scrolled {
     height: 100%;
     display: flex;
     z-index: 0;
+    will-change: transform;
+    transform: translate3d(0, 0, 0);
     animation: heroSlide 24s infinite ease-in-out;
 }
 
@@ -373,6 +375,8 @@ header.scrolled {
     min-width: 100%;
     width: 100%;
     flex-shrink: 0;
+    backface-visibility: hidden;
+    transform: translateZ(0);
 }
 
 .hero-slide img {
@@ -381,6 +385,8 @@ header.scrolled {
     object-fit: cover;
     object-position: center;
     filter: brightness(1.05) contrast(1.05);
+    backface-visibility: hidden;
+    transform: translateZ(0);
 }
 
 @keyframes heroSlide {
@@ -695,6 +701,8 @@ header.scrolled {
     opacity: 0;
     transform: translateY(20px);
     transition: var(--transition-smooth);
+    will-change: opacity, transform;
+    backface-visibility: hidden;
 }
 
 .collection-item:hover .collection-overlay {
@@ -724,6 +732,22 @@ header.scrolled {
         rgba(0, 0, 0, 0.3),
         rgba(0, 0, 0, 0)
     );
+}
+
+@media (max-width: 768px) {
+    .collection-overlay {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .collection-item::before,
+    .collection-item:hover::before {
+        background: linear-gradient(
+            to top,
+            rgba(0, 0, 0, 0.4),
+            rgba(0, 0, 0, 0.1)
+        );
+    }
 }
 
 /* Lookbook Editorial */
